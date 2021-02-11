@@ -2,12 +2,26 @@
   <div id="nav">
     <router-link to="/"> Home </router-link>
     <router-link to="/dashboard"> Dashboard </router-link>
-    <router-link to="/register"> Register </router-link>
+    <div class="buttons">
+      <router-link v-if="!loggedIn" to="/register" class="button">
+        Register
+      </router-link>
+      <router-link v-if="!loggedIn" to="/login" class="button">
+        Login
+      </router-link>
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+import { authComputed } from "@/vuex/helpers";
+
+export default {
+  name: "AppNav",
+  computed: {
+    ...authComputed,
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -41,7 +55,6 @@ a {
 
 button,
 .button {
-  margin-left: auto;
   background: white;
   text-decoration: none;
   color: #2c3e50;
@@ -57,5 +70,10 @@ button,
 
 .nav-welcome + button {
   margin-left: 0;
+}
+
+.buttons {
+  display: flex;
+  margin-left: auto;
 }
 </style>
