@@ -1,15 +1,14 @@
 <template>
   <div id="nav">
     <router-link to="/"> Home </router-link>
-    <router-link to="/dashboard"> Dashboard </router-link>
-    <div class="buttons">
-      <router-link v-if="!loggedIn" to="/register" class="button">
-        Register
-      </router-link>
-      <router-link v-if="!loggedIn" to="/login" class="button">
-        Login
-      </router-link>
+    <router-link v-if="loggedIn" to="/dashboard"> Dashboard </router-link>
+    <div v-if="!loggedIn" class="buttons">
+      <router-link to="/register" class="button"> Register </router-link>
+      <router-link to="/login" class="button"> Login </router-link>
     </div>
+    <button v-else type="button" class="logoutButton" @click="logout">
+      Logout
+    </button>
   </div>
 </template>
 
@@ -20,6 +19,11 @@ export default {
   name: "AppNav",
   computed: {
     ...authComputed,
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+    },
   },
 };
 </script>
@@ -66,6 +70,7 @@ button,
 
 .logoutButton {
   cursor: pointer;
+  margin-left: auto;
 }
 
 .nav-welcome + button {
